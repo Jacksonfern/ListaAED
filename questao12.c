@@ -7,45 +7,32 @@ typedef struct {
 	int id;
 }tipoDados;
 
-void insertionSort(tipoDados vet[], int inicio, int fim){
-	int i, j;
-	tipoDados pivot;
-
-	for(i=inicio; i<=fim; i++){
-		pivot = vet[i];
-		j = i-1;
-		while(j>=inicio && strcmp(pivot.nome, vet[j].nome) < 0){
-			vet[j+1] = vet[j];
-			j--;
-		}
-		vet[j+1] = pivot;
-	}
-}
-
 void quickSort(tipoDados vet[], int inicio, int fim){
 	int esq, dir;
 	tipoDados pivot, aux;
 
-	if(fim - inicio < 9)
-		insertionSort(vet, inicio, fim);
+	if(fim <= inicio)
+		return;
 	else{
 		esq = inicio;
 		dir = fim;
 		pivot = vet[inicio];
 		while(esq < dir){
-			while(strcmp(vet[esq].nome, pivot.nome) < 0)
+			while(vet[esq].id < pivot.id)
 				esq++;
-			while(strcmp(vet[dir].nome, pivot.nome) > 0)
+			while(vet[dir].id > pivot.id)
 				dir--;
 
 			if(esq<=dir){
 				aux = vet[esq];
 				vet[esq] = vet[dir];
 				vet[dir] = aux;
+				esq++;
+				dir--;
 			}
 		}
 		quickSort(vet, inicio, dir);
-		quickSort(vet, dir+1, fim);
+		quickSort(vet, esq, fim);
 	}
 }
 
@@ -54,9 +41,9 @@ int main(){
 	tipoDados vet[100];
 	scanf("%d", &N);
 	for(i=0; i<N; i++)
-		scanf("%s", vet[i].nome);
+		scanf("%d", &vet[i].id);
 	quickSort(vet, 0, N-1);
 	for(i=0; i<N; i++)
-		printf("%s\n", vet[i].nome);
+		printf("%d\n", vet[i].id);
 	return 0;
 }
