@@ -25,18 +25,12 @@ void push(tipoLista *l, int d){
 	l->prim = aux;
 }
 
-int simetrica(tipoLista l){
-	tipoNo *i, *j;
-	i = l.prim;
-
-	while(i){
-		j = l.prim->prox;
-		while(j){
-			if(i->dado == j->dado)
-				break;
-			j = j->prox;
-		}
-		if(j==NULL)
+void destroiLista(tipoLista *l){
+	tipoNo *aux;
+	while(l->prim){
+		aux = l->prim;
+		l->prim = l->prim->prox;
+		free(aux);
 	}
 }
 
@@ -52,6 +46,8 @@ int main(){
 		scanf("%d", &d);
 		push(&l, d);
 	}
-	printf("%d\n", simetrica(l));
+	destroiLista(&l);
+	if(l.prim==NULL)
+		printf("Lista vazia!\n");
 	return 0;
 }

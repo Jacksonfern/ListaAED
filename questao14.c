@@ -1,19 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
-	char nome[20];
-	char endereco[20];
-	int id;
-}tipoDados;
-
 typedef struct tipoNo{
 	int dado;
 	struct tipoNo *prox;
 }tipoNo;
 
 typedef struct{
-	tipoNo *prim; 
+	tipoNo *prim;
 }tipoLista;
 
 void push(tipoLista *l, int d){
@@ -25,33 +19,26 @@ void push(tipoLista *l, int d){
 	l->prim = aux;
 }
 
-int simetrica(tipoLista l){
-	tipoNo *i, *j;
-	i = l.prim;
-
-	while(i){
-		j = l.prim->prox;
-		while(j){
-			if(i->dado == j->dado)
-				break;
-			j = j->prox;
-		}
-		if(j==NULL)
+int somaValoresLista(tipoLista l){
+	int cont=0;
+	while(l.prim){
+		cont+=l.prim->dado;
+		l.prim = l.prim->prox;
 	}
+	return cont;
 }
 
 int main(){
+	int op, d;
 	tipoLista l;
-	int d;
-	int op, pos;
-	l.prim = NULL;
 
+	l.prim = NULL;
 	while(scanf("%d", &op)){
 		if(op==0)
 			break;
 		scanf("%d", &d);
 		push(&l, d);
 	}
-	printf("%d\n", simetrica(l));
+	printf("%d\n", somaValoresLista(l));
 	return 0;
 }

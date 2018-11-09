@@ -25,19 +25,20 @@ void push(tipoLista *l, int d){
 	l->prim = aux;
 }
 
-int simetrica(tipoLista l){
-	tipoNo *i, *j;
-	i = l.prim;
+/*void inserir(tipoLista	L,	int	*d)	{	
+	tipoNo *aux;	
 
-	while(i){
-		j = l.prim->prox;
-		while(j){
-			if(i->dado == j->dado)
-				break;
-			j = j->prox;
-		}
-		if(j==NULL)
-	}
+	aux->dado =	d;	
+	aux->prox =	L->prim;	
+	L->prim	= aux;	
+}*/
+void inserir(tipoLista	*L,	int	d)	{	
+	tipoNo *aux;	
+
+	aux = (tipoNo *) malloc(sizeof(tipoNo));
+	aux->dado =	d;	
+	aux->prox =	L->prim;	
+	L->prim	= aux;	
 }
 
 int main(){
@@ -52,6 +53,5 @@ int main(){
 		scanf("%d", &d);
 		push(&l, d);
 	}
-	printf("%d\n", simetrica(l));
 	return 0;
 }

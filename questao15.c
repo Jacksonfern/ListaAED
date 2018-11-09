@@ -25,19 +25,15 @@ void push(tipoLista *l, int d){
 	l->prim = aux;
 }
 
-int simetrica(tipoLista l){
-	tipoNo *i, *j;
-	i = l.prim;
-
-	while(i){
-		j = l.prim->prox;
-		while(j){
-			if(i->dado == j->dado)
-				break;
-			j = j->prox;
+int listaCrescente(tipoLista l){
+	if(l.prim){
+		while(l.prim->prox){
+			if(l.prim->dado >= l.prim->prox->dado)
+				return 0;
+			l.prim = l.prim->prox;
 		}
-		if(j==NULL)
 	}
+	return 1;
 }
 
 int main(){
@@ -52,6 +48,6 @@ int main(){
 		scanf("%d", &d);
 		push(&l, d);
 	}
-	printf("%d\n", simetrica(l));
+	printf("%d\n", listaCrescente(l));
 	return 0;
 }

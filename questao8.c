@@ -8,7 +8,7 @@ typedef struct {
 }tipoDados;
 
 typedef struct tipoNo{
-	int dado;
+	tipoDados dados;
 	struct tipoNo *prox;
 }tipoNo;
 
@@ -16,42 +16,43 @@ typedef struct{
 	tipoNo *prim; 
 }tipoLista;
 
-void push(tipoLista *l, int d){
+void push(tipoLista *l, tipoDados d){
 	tipoNo *aux;
 
 	aux = (tipoNo *) malloc(sizeof(tipoNo));
-	aux->dado = d;
+	aux->dados = d;
 	aux->prox = l->prim;
 	l->prim = aux;
 }
 
-int simetrica(tipoLista l){
-	tipoNo *i, *j;
-	i = l.prim;
+int copiaLista(tipoLista *l1, tipoDados vet[]){
+	tipoNo *aux;
+	int cont = 0;
 
-	while(i){
-		j = l.prim->prox;
-		while(j){
-			if(i->dado == j->dado)
-				break;
-			j = j->prox;
-		}
-		if(j==NULL)
+	while(l1->prim){
+		aux = l1->prim;
+		vet[cont] = aux->dados;
+		cont++;
+		l1->prim = l1->prim->prox;
+		free(aux);
 	}
+	return cont;
 }
 
 int main(){
 	tipoLista l;
-	int d;
-	int op, pos;
+	int op, pos, i;
+	tipoDados d, vet[100];
 	l.prim = NULL;
 
 	while(scanf("%d", &op)){
 		if(op==0)
 			break;
-		scanf("%d", &d);
+		scanf("%d", &d.id);
 		push(&l, d);
 	}
-	printf("%d\n", simetrica(l));
+	pos = copiaLista(&l, vet);
+	for(i=0; i<pos; i++)
+		printf("%d\n", vet[i].id);
 	return 0;
 }
