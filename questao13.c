@@ -10,7 +10,7 @@ void quickSortParcial(tipoDados vet[], int inicio, int fim, int K){
 	int esq, dir;
 	tipoDados pivot, aux;
 
-	if(inicio < fim){
+	if(inicio < fim && K > 0){
 		esq = inicio;
 		dir = fim;
 		pivot = vet[inicio];
@@ -29,8 +29,13 @@ void quickSortParcial(tipoDados vet[], int inicio, int fim, int K){
 				dir--;
 			}
 		}
-		quickSortParcial(vet, inicio, dir, K);
-		quickSortParcial(vet, esq, fim, K);
+		if(K >= dir-inicio+1){
+			quickSortParcial(vet, inicio, dir, dir-inicio+1);
+			quickSortParcial(vet, esq, fim, K-(dir-inicio+1));
+		}
+		else{
+			quickSortParcial(vet, inicio, dir, K);
+		}
 	}
 }
 

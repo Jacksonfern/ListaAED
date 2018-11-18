@@ -31,24 +31,36 @@ void push(tipoListaCircular *l, tipoDados d){
 		aux->prox = aux;
 	}
 	else{
+		aux->prox = l->atual->prox;
 		l->atual->prox = aux;
-		aux = l->atual;
 	}
 }
 
 tipoDados pop(tipoListaCircular *l, char chave[]){
 	tipoNo *ant;
 	tipoNo *aux = l->atual;
+	tipoDados ret;
 
-	if(aux){
-		do{
-			if(strcmp(aux->dado.nome, chave) == 0){
-				ant->prox = aux->prox;
+	//Supondo que o usuário não irá não chamará a função quando a lista estiver vazia
+	do{
+		if(strcmp(aux->dado.nome, chave) == 0){
+			if(aux->prox == aux){
+				ret = aux->dado;
+				l->atual = NULL;
 				free(aux);
 			}
-			aux = aux->prox;
-		}while(aux != l->atual);
-	}
+			else{
+				ret = aux->dado;
+				ant->prox = aux->prox;
+				if(aux == l->atual)
+					l->atual = l->atual->prox;
+				free(aux);
+			}
+			return ret;
+		}
+		ant = aux;
+		aux = aux->prox;
+	}while(aux != l->atual);
 }
 
 void update(tipoListaCircular *l){
@@ -64,7 +76,7 @@ void list(tipoListaCircular l){
 			aux = aux->prox;
 		}while(aux != l.atual);
 	}
-	printf("%s\n", aux->dado.nome);
+	//printf("%s\n", aux->dado.nome);
 }
 
 int main(){
@@ -79,8 +91,7 @@ int main(){
 		scanf("%s %s %d", d.nome, d.endereco, &d.id);
 		push(&p, d);
 	}
-	//list(p);
-	printf("%s\n", p.atual->dado.nome);
+	list(p);
 	return 0;
 }
 

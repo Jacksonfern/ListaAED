@@ -27,17 +27,30 @@ void push(tipoLista *l, int d){
 
 int simetrica(tipoLista l){
 	tipoNo *i, *j;
-	i = l.prim;
+	int mid, cont=0;
 
+	i = l.prim;
 	while(i){
-		j = l.prim->prox;
-		while(j){
-			if(i->dado == j->dado)
-				break;
-			j = j->prox;
-		}
-		if(j==NULL)
+		cont++;
+		i = i->prox;
 	}
+	mid = cont/2;
+	cont = mid;
+	j = l.prim;
+	while(mid--)
+		j = j->prox;
+	while(cont--){
+		i = j;
+		while(i){
+			if(l.prim->dado == i->dado)
+				break;
+			i = i->prox;
+		}
+		if(i==NULL)
+			return 0;
+		l.prim = l.prim->prox;
+	}
+	return 1;
 }
 
 int main(){

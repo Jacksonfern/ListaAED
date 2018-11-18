@@ -35,6 +35,7 @@ tipoDados pop(tipoPilha *p){
 
 	p->top = aux->prox;
 	free(aux);
+	return ret;
 }
 
 int main(){

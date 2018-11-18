@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef struct {
@@ -11,7 +12,7 @@ void mergeSort(tipoDados vet[], int inicio, int fim){
 	if(fim <= inicio)
 		return;
 	int i, j, med, cont;
-	tipoDados res[fim-inicio+1];
+	tipoDados *res = (tipoDados *) malloc(sizeof(tipoDados) * (fim-inicio+1));
 	med = (inicio + fim) / 2;
 	mergeSort(vet, inicio, med);
 	mergeSort(vet, med+1, fim);
@@ -44,6 +45,7 @@ void mergeSort(tipoDados vet[], int inicio, int fim){
 		vet[i] = res[j];
 		j++;
 	}
+	free(res);
 }
 
 int main(){

@@ -8,7 +8,7 @@ typedef struct {
 }tipoDados;
 
 typedef struct tipoNo{
-	tipoDados d;
+	tipoDados dado;
 	struct tipoNo *prox;
 }tipoNo;
 
@@ -25,7 +25,7 @@ void push(tipoFila *f, tipoDados d){
 	tipoNo *aux;
 
 	aux = (tipoNo *) malloc(sizeof(tipoNo));
-	aux->d = d;
+	aux->dado = d;
 	aux->prox = NULL;
 
 	if(f->back == NULL)
@@ -37,7 +37,7 @@ void push(tipoFila *f, tipoDados d){
 
 tipoDados pop(tipoFila *f){
 	tipoNo *aux = f->front;
-	tipoDados ret = aux->d;
+	tipoDados ret = aux->dado;
 
 	f->front = f->front->prox;
 	free(aux);
@@ -58,7 +58,7 @@ int main(){
 	}
 	system("clear");
 	while(p.front != NULL){
-		printf("%s\n%s\n%d\n\n", p.front->d.nome, p.front->d.endereco, p.front->d.id);
+		printf("%s\n%s\n%d\n\n", p.front->dado.nome, p.front->dado.endereco, p.front->dado.id);
 		pop(&p);
 	}
 	return 0;
