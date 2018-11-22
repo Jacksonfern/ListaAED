@@ -37,19 +37,24 @@ void push(tipoListaCircular *l, tipoDados d){
 }
 
 tipoDados pop(tipoListaCircular *l){
-	tipoNo *aux, *atual = l->atual;
+	tipoDados ret;
+	tipoNo *ant, *aux = l->atual;
 
 	while(aux->prox != l->atual)
 		aux = aux->prox;
 	if(aux == l->atual){
+		ret = l->atual->dado;
 		l->atual = NULL;
 		free(aux);
 	}
 	else{
-		aux->prox = l->atual->prox;
-		free(l->atual);
+		ret = l->atual->dado;
+		ant = l->atual;
 		l->atual = l->atual->prox;
+		aux->prox = l->atual;
+		free(ant);
 	}
+	return ret;
 }
 
 void update(tipoListaCircular *l){
@@ -59,16 +64,10 @@ void update(tipoListaCircular *l){
 void list(tipoListaCircular l){
 	tipoNo *aux = l.atual;
 
-	if(aux){
-		do{
-			printf("%s\n", aux->dado.nome);
-			aux = aux->prox;
-		}while(aux != l.atual);
-	}
-	while(l.atual){
-		printf("%s %s %d\n", l.atual->dado.nome, l.atual->dado.endereco, l.atual->dado.id);
-		pop(&l);
-	}
+	do{
+		printf("%s\n", aux->dado.nome);
+		aux = aux->prox;
+	}while(aux != l.atual);
 }
 
 int main(){
@@ -84,6 +83,11 @@ int main(){
 		push(&p, d);
 	}
 	list(p);
+	printf("\n");
+	while(p.atual){
+		printf("%s\n", p.atual->dado.nome);
+		d = pop(&p);
+	}
 	return 0;
 }
 
